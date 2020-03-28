@@ -21,7 +21,6 @@
         <module>areaplacer-model</module>
         <module>areaplacer-boot</module>
         <module>areaplacer-service</module>
-        <module>areaplacer-service</module>
     </modules>
 
     <properties>
@@ -46,14 +45,5 @@
             </exclusions>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
