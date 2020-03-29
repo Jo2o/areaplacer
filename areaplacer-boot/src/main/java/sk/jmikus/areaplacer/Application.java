@@ -5,26 +5,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import sk.jmikus.areaplacer.service.MyService;
+import sk.jmikus.areaplacer.service.MainService;
 
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
-    private final MyService myService;
+    private final MainService mainService;
 
     @Autowired
-    public Application(MyService myService) {
-        this.myService = myService;
+    public Application(MainService mainService) {
+        this.mainService = mainService;
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Override
     public void run(String... args) {
-        myService.printMsg(args);
+        mainService.invoke(args);
     }
 
 }

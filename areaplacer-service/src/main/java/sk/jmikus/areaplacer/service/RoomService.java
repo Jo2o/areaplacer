@@ -23,6 +23,7 @@ public class RoomService {
         List<String> roomFileContent = fileService.readFile("classpath:input/inRoom.txt");
         validateRoomFileContent(roomFileContent);
 
+        /* Add points of the room TOP to BOTTOM and from LEFT to RIGHT. */
         Room room = new Room();
         for (int i = 1; i < roomFileContent.size(); i++) {
             String line = roomFileContent.get(i);
@@ -32,11 +33,11 @@ public class RoomService {
                     room.addPoint(Point.builder()
                             .x(j)
                             .y(roomFileContent.size() - 1 - i)
-                            .filled(Filled.EMPTY)
                             .build());
                 }
             }
         }
+
         return room;
     }
 
