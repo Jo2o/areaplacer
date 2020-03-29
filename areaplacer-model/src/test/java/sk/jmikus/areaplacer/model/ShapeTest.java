@@ -6,10 +6,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class ShapeTest {
 
     private Shape shape;
@@ -25,7 +22,7 @@ class ShapeTest {
     @Test
     void shouldMoveLeft() {
         // when
-        shape.moveLeft();
+        shape.moveLeftByOne();
         // then
         assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(1).y(0).build());
         assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(2).y(0).build());
@@ -35,7 +32,7 @@ class ShapeTest {
     @Test
     void shouldMoveUp() {
         // when
-        shape.moveUp();
+        shape.moveUpByOne();
         // then
         assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(0).y(1).build());
         assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(1).y(1).build());

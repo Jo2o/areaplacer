@@ -10,32 +10,34 @@ import sk.jmikus.areaplacer.exception.ValidationException;
 import sk.jmikus.areaplacer.model.*;
 
 @Service
-public class FurnitureService {
+public class ShapeService {
 
     private final FileService fileService;
 
     @Autowired
-    public FurnitureService(FileService fileService) {
+    public ShapeService(FileService fileService) {
         this.fileService = fileService;
     }
 
-    public List<Shape> loadFurniture() {
+    public List<Shape> loadShapes() {
         List<String> furnitureFileContent = fileService.readFile("classpath:input/inFurniture.txt");
         validateFurnitureFileContent(furnitureFileContent);
         try {
-            List<Shape> furnitures = new ArrayList<>();
+            List<Shape> shapes = new ArrayList<>();
             for (String line : furnitureFileContent) {
-                furnitures.add(parseFurniture(Integer.parseInt(Character.toString(line.charAt(1))),
-                        line.substring(2).toCharArray()));
+                shapes.add(
+                        parseShape(Character.toString(line.charAt(0)),
+                                Integer.parseInt(Character.toString(line.charAt(1))),
+                                line.substring(2).toCharArray()));
             }
-            return furnitures;
+            return shapes;
         } catch (RuntimeException e) {
             throw new ValidationException("Furniture parse exception!", e);
         }
     }
 
-    private Shape parseFurniture(int width, char[] characters) {
-        validateFurniture(width, characters);
+    private Shape parseShape(String name, int width, char[] characters) {
+        validateFurniture(name, width, characters);
         int length = characters.length / width;
         int x = 0;
         int y = 0;
@@ -48,12 +50,14 @@ public class FurnitureService {
             if (characters[i] == '#') {
                 shapePoints.add(Point.builder()
                         .x(x)
-                        .y(length - 1 - y)
+                        .y(length - 1 - y) // this makes Y to go from DOWN to UP
                         .build());
             }
             x++;
         }
-        return Shape.builder().points(shapePoints).build();
+        return Shape.builder()
+                .name(name)
+                .points(shapePoints).build();
     }
 
     private void validateFurnitureFileContent(List<String> furnitureFileContent) {
@@ -62,9 +66,9 @@ public class FurnitureService {
         }
     }
 
-    private void validateFurniture(int width, char[] furnitureCharacters) {
+    private void validateFurniture(String name, int width, char[] furnitureCharacters) {
         if ((furnitureCharacters.length % width) != 0) {
-            throw new ValidationException("Found invalid furniture: " + Arrays.toString(furnitureCharacters));
+            throw new ValidationException("Found invalid furniture: " + name + Arrays.toString(furnitureCharacters));
         }
     }
 

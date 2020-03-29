@@ -5,22 +5,20 @@ import java.util.List;
 
 public class Shape {
 
+    private String name;
     private List<Point> points;
 
-    public Shape(List<Point> points) {
+    public Shape(String name, List<Point> points) {
+        this.name = name;
         this.points = points;
     }
 
-    public void moveLeft() {
-        for (Point point : points) {
-            point.setX(point.getX() + 1);
-        }
+    public void moveLeftByOne() {
+        points.forEach(point -> point.setX(point.getX() + 1));
     }
 
-    public void moveUp() {
-        for (Point point : points) {
-            point.setY(point.getY() + 1);
-        }
+    public void moveUpByOne() {
+        points.forEach(point -> point.setY(point.getY() + 1));
     }
 
     public List<Point> getPoints() {
@@ -29,7 +27,7 @@ public class Shape {
 
     @Override
     public String toString() {
-        return "Shape{points=" + points + '}';
+        return "Shape{name=" + name + ", points=" + points + '}';
     }
 
     public static ShapeBuilder builder() {
@@ -37,16 +35,18 @@ public class Shape {
     }
 
     public static class ShapeBuilder {
-
+        private String name;
         private List<Point> points = new ArrayList<>();
-
+        public ShapeBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
         public ShapeBuilder points(List<Point> points) {
             this.points = points;
             return this;
         }
-
         public Shape build() {
-            return new Shape(points);
+            return new Shape(name, points);
         }
     }
 
