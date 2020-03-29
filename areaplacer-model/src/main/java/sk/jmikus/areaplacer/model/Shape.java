@@ -13,12 +13,32 @@ public class Shape {
         this.points = points;
     }
 
-    public void moveLeftByOne() {
+    public void moveRightByOne() {
         points.forEach(point -> point.setX(point.getX() + 1));
     }
 
     public void moveUpByOne() {
         points.forEach(point -> point.setY(point.getY() + 1));
+    }
+
+    public void moveLeft(int num) {
+        points.forEach(point -> point.setX(point.getX() - num));
+    }
+
+    public int getTopBoundary() {
+        return points.stream().mapToInt(Point::getY).max().orElse(0);
+    }
+
+    public int getBottomBoundary() {
+        return points.stream().mapToInt(Point::getY).min().orElse(0);
+    }
+
+    public int getRightBoundary() {
+        return points.stream().mapToInt(Point::getX).max().orElse(0);
+    }
+
+    public int getLeftBoundary() {
+        return points.stream().mapToInt(Point::getX).min().orElse(0);
     }
 
     public List<Point> getPoints() {

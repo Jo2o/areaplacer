@@ -22,6 +22,7 @@ public class MainService {
     public void invoke(String... args) {
         log.info("Program started with arguments: {}", Arrays.asList(args));
         placementService.calculatePlacementCombinations();
+        formatService.formatOutput();
     }
 
 }

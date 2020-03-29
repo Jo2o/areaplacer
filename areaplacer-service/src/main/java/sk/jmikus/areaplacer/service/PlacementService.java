@@ -1,12 +1,13 @@
 package sk.jmikus.areaplacer.service;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sk.jmikus.areaplacer.model.Area;
-import sk.jmikus.areaplacer.model.Shape;
+import sk.jmikus.areaplacer.model.*;
 
 @Service
 public class PlacementService {
@@ -22,19 +23,46 @@ public class PlacementService {
 
     public List<List<Shape>> calculatePlacementCombinations() {
         List<List<Shape>> results = new ArrayList<>();
-
-        Area area = areaService.loadArea();
         List<Shape> shapes = shapeService.loadShapes();
+        Area area = areaService.loadArea();
 
-        for (Shape shape : shapes) {
+        List<Shape> allPlacements = getAllPlacements(shapes.get(0), area);
 
-        }
 
         return results;
     }
 
-    private Shape placeShape(Shape shape, Area area) {
-        return new Shape("name", Collections.EMPTY_LIST);
+    private List<Shape> getAllPlacements(Shape shape, Area area) {
+        List<Shape> placements = new ArrayList<>();
+        int moveRightCounter = 0;
+        while (shape.getTopBoundary() <= area.getTopBoundary()) {
+            while (shape.getRightBoundary() <= area.getRightBoundary()) {
+                if (fitsInArea(shape, area)) {
+                    placements.add(shape);
+                }
+                shape.moveRightByOne();
+                moveRightCounter++;
+            }
+            shape.moveUpByOne();
+            shape.moveLeft(moveRightCounter);
+            moveRightCounter = 0;
+        }
+        return placements;
     }
+
+
+
+    private boolean fitsInArea(Shape shape, Area area) {
+        return area.getPoints().containsAll(shape.getPoints());
+    }
+
+    private Area getModifiedArea(Shape shape, Area area) {
+        List<Point> originalAreaPoints = area.getPoints();
+        List<Point> modifiedAreaPoints = originalAreaPoints.stream()
+                .filter(point -> !shape.getPoints().contains(point))
+                .collect(toList());
+        return Area.builder().points(modifiedAreaPoints).build();
+    }
+
 
 }

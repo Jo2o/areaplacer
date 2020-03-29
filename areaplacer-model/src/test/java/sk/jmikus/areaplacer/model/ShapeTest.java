@@ -20,9 +20,9 @@ class ShapeTest {
     }
 
     @Test
-    void shouldMoveLeft() {
+    void shouldMoveRightByOne() {
         // when
-        shape.moveLeftByOne();
+        shape.moveRightByOne();
         // then
         assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(1).y(0).build());
         assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(2).y(0).build());
@@ -30,13 +30,47 @@ class ShapeTest {
     }
 
     @Test
-    void shouldMoveUp() {
+    void shouldMoveUpByOne() {
         // when
         shape.moveUpByOne();
         // then
         assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(0).y(1).build());
         assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(1).y(1).build());
         assertThat(shape.getPoints().get(2)).isEqualTo(Point.builder().x(0).y(2).build());
+    }
+
+    @Test
+    void shouldMoveLeftByOne() {
+        // when
+        shape.moveLeft(1);
+        // then
+        assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(-1).y(0).build());
+        assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(0).y(0).build());
+        assertThat(shape.getPoints().get(2)).isEqualTo(Point.builder().x(-1).y(1).build());
+    }
+
+    @Test
+    void shouldGetLeftBoundary() {
+        // when
+        int result = shape.getLeftBoundary();
+        // then
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    void shouldGetRightBoundary() {
+        // when
+        int result = shape.getRightBoundary();
+        // then
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void shouldGetTopBoundary() {
+        // when
+        int result = shape.getTopBoundary();
+        // then
+        assertThat(result).isEqualTo(1);
     }
 
 }

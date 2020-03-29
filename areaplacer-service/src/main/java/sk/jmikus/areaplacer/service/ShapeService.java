@@ -38,9 +38,11 @@ public class ShapeService {
 
     private Shape parseShape(String name, int width, char[] characters) {
         validateFurniture(name, width, characters);
+
         int length = characters.length / width;
         int x = 0;
         int y = 0;
+
         List<Point> shapePoints = new ArrayList<>();
         for (int i = 0; i < characters.length; i++) {
             if ((i != 0) && ((i % width) == 0)) {
@@ -55,6 +57,7 @@ public class ShapeService {
             }
             x++;
         }
+
         return Shape.builder()
                 .name(name)
                 .points(shapePoints).build();
