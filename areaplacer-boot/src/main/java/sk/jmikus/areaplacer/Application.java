@@ -25,7 +25,6 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) {
         myService.printMsg(args);
-        System.out.println("Hello");
     }
 
 }

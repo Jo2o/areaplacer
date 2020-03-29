@@ -11,5 +11,12 @@
 
     <artifactId>areaplacer-service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>sk.jmikus</groupId>
+            <artifactId>areaplacer-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
