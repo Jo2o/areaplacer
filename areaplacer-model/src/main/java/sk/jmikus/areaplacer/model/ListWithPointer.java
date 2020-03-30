@@ -56,7 +56,10 @@ public class ListWithPointer {
     private List<Shape> makeDeepCopyOfShapes() {
         List<Shape> result = new ArrayList<>();
         for (Shape shape : shapes) {
-            result.add(Shape.builder().points(shape.getPoints()).build());
+            result.add(Shape.builder()
+                    .name(shape.getName())
+                    .points(shape.getPoints())
+                    .build());
         }
         return result;
     }

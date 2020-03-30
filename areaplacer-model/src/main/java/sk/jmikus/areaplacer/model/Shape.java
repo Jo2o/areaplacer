@@ -1,36 +1,46 @@
 package sk.jmikus.areaplacer.model;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Shape {
 
-    private String name;
-    private List<Point> points;
+    private final String name;
+    private final List<Point> points;
 
     public Shape(String name, List<Point> points) {
         this.name = name;
         this.points = points;
     }
 
-    public void moveRightByOne() {
-        points.forEach(point -> point.setX(point.getX() + 1));
+    public Shape moveRightByOne() {
+        return builder().name(name)
+                .points(makeDeepCopyOfPoints().stream()
+                        .map(point -> { point.setX(point.getX() + 1); return point; })
+                        .collect(toList()))
+                .build();
     }
 
-    public void moveUpByOne() {
-        points.forEach(point -> point.setY(point.getY() + 1));
+    public Shape moveUpByOne() {
+        return builder().name(name)
+                .points(makeDeepCopyOfPoints().stream()
+                        .map(point -> { point.setY(point.getY() + 1); return point; })
+                        .collect(toList()))
+                .build();
     }
 
-    public void moveLeft(int num) {
-        points.forEach(point -> point.setX(point.getX() - num));
+    public Shape moveLeft(int num) {
+        return builder().name(name)
+                .points(makeDeepCopyOfPoints().stream()
+                        .map(point -> { point.setX(point.getX() - num); return point; })
+                        .collect(toList()))
+                .build();
     }
 
     public int getTopBoundary() {
         return points.stream().mapToInt(Point::getY).max().orElse(0);
-    }
-
-    public int getBottomBoundary() {
-        return points.stream().mapToInt(Point::getY).min().orElse(0);
     }
 
     public int getRightBoundary() {

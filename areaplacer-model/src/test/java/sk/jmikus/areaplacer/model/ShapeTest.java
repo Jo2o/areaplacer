@@ -22,31 +22,31 @@ class ShapeTest {
     @Test
     void shouldMoveRightByOne() {
         // when
-        shape.moveRightByOne();
+        Shape result = shape.moveRightByOne();
         // then
-        assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(1).y(0).build());
-        assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(2).y(0).build());
-        assertThat(shape.getPoints().get(2)).isEqualTo(Point.builder().x(1).y(1).build());
+        assertThat(result.getPoints().get(0)).isEqualTo(Point.builder().x(1).y(0).build());
+        assertThat(result.getPoints().get(1)).isEqualTo(Point.builder().x(2).y(0).build());
+        assertThat(result.getPoints().get(2)).isEqualTo(Point.builder().x(1).y(1).build());
     }
 
     @Test
     void shouldMoveUpByOne() {
         // when
-        shape.moveUpByOne();
+        Shape result = shape.moveUpByOne();
         // then
-        assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(0).y(1).build());
-        assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(1).y(1).build());
-        assertThat(shape.getPoints().get(2)).isEqualTo(Point.builder().x(0).y(2).build());
+        assertThat(result.getPoints().get(0)).isEqualTo(Point.builder().x(0).y(1).build());
+        assertThat(result.getPoints().get(1)).isEqualTo(Point.builder().x(1).y(1).build());
+        assertThat(result.getPoints().get(2)).isEqualTo(Point.builder().x(0).y(2).build());
     }
 
     @Test
     void shouldMoveLeftByOne() {
         // when
-        shape.moveLeft(1);
+        Shape result = shape.moveLeft(1);
         // then
-        assertThat(shape.getPoints().get(0)).isEqualTo(Point.builder().x(-1).y(0).build());
-        assertThat(shape.getPoints().get(1)).isEqualTo(Point.builder().x(0).y(0).build());
-        assertThat(shape.getPoints().get(2)).isEqualTo(Point.builder().x(-1).y(1).build());
+        assertThat(result.getPoints().get(0)).isEqualTo(Point.builder().x(-1).y(0).build());
+        assertThat(result.getPoints().get(1)).isEqualTo(Point.builder().x(0).y(0).build());
+        assertThat(result.getPoints().get(2)).isEqualTo(Point.builder().x(-1).y(1).build());
     }
 
     @Test

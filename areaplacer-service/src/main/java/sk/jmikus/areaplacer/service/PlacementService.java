@@ -17,6 +17,7 @@ public class PlacementService {
     private final ShapeService shapeService;
 
     private List<List<Shape>> results = new ArrayList<>();
+    private Deque<Shape> currentResult = new ArrayDeque<>();
 
     @Autowired
     public PlacementService(AreaService areaService, ShapeService shapeService) {
@@ -40,24 +41,31 @@ public class PlacementService {
         }
         Shape currentShape = shapes.getShapes().get(shapes.getPointer());
         List<Shape> allShapePlacements = getAllPlacements(currentShape, area);
-        if (CollectionUtils.isEmpty(allShapePlacements)) {
+        if (CollectionUtils.isEmpty(allShapePlacements)) {      // the shape could not be placed = go back to try others
+            if (!currentResult.isEmpty()) {
+                currentResult.pop();
+            }
             return;
         }
         if (shapes.getPointer() == (shapes.getShapes().size() - 1)) {
-            for (Shape lastResultShape : allShapePlacements) {
-                results.add(createOneResultCombination(lastResultShape, shapes));
+            for (Shape lastResultShape : allShapePlacements) {  // found fitting result combination when the last shape placed successfully
+                currentResult.push(lastResultShape);
+                results.add(new ArrayList<>(currentResult));
+                currentResult.pop();
             }
             return;
         }
         for (Shape shape : allShapePlacements) {
             int pointer = shapes.getPointer();
             pointer++;
+            currentResult.push(shape);
             gatherResultsRecursively(
                     ListWithPointer.builder()
                             .pointer(pointer)
                             .shapes(shapes.getShapes())
                             .build(),
                     getModifiedArea(shape, area));
+            currentResult.pop();
         }
     }
 
@@ -72,11 +80,11 @@ public class PlacementService {
                             .points(shape.getPoints())
                             .build());
                 }
-                shape.moveRightByOne();
+                shape = shape.moveRightByOne();
                 moveRightCounter++;
             }
-            shape.moveUpByOne();
-            shape.moveLeft(moveRightCounter);
+            shape = shape.moveUpByOne();
+            shape = shape.moveLeft(moveRightCounter);
             moveRightCounter = 0;
         }
         return placements;
@@ -92,10 +100,6 @@ public class PlacementService {
                 .filter(point -> !shape.getPoints().contains(point))
                 .collect(toList());
         return Area.builder().points(modifiedAreaPoints).build();
-    }
-
-    private List<Shape> createOneResultCombination() {
-
     }
 
 }
