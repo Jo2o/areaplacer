@@ -41,8 +41,12 @@ public class Shape {
         return points.stream().mapToInt(Point::getX).min().orElse(0);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Point> getPoints() {
-        return points;
+        return makeDeepCopyOfPoints();
     }
 
     @Override
@@ -68,6 +72,14 @@ public class Shape {
         public Shape build() {
             return new Shape(name, points);
         }
+    }
+
+    private List<Point> makeDeepCopyOfPoints() {
+        List<Point> result = new ArrayList<>();
+        for (Point point : points) {
+            result.add(Point.builder().x(point.getX()).y(point.getY()).build());
+        }
+        return result;
     }
 
 }
