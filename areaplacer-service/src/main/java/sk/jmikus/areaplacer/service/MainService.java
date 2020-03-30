@@ -26,10 +26,10 @@ public class MainService {
 
     public void invoke(String... args) {
         log.info("Program started with arguments: {}", Arrays.asList(args));
-        printService.printArea();
         List<List<Shape>> results = placementService.calculatePlacementCombinations();
+        printService.printArea();
         printService.printResults(results);
-        //formatService.formatOutput();
+        formatService.formatOutput(results);
     }
 
 }

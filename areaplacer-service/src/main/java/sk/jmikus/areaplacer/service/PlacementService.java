@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -19,7 +18,6 @@ public class PlacementService {
     private List<List<Shape>> results = new ArrayList<>();
     private Deque<Shape> currentResult = new ArrayDeque<>();
 
-    @Autowired
     public PlacementService(AreaService areaService, ShapeService shapeService) {
         this.areaService = areaService;
         this.shapeService = shapeService;

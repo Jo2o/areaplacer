@@ -1,9 +1,9 @@
 package sk.jmikus.areaplacer.model;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Shape {
 
@@ -39,8 +39,20 @@ public class Shape {
                 .build();
     }
 
+    public Shape moveDown(int num) {
+        return builder().name(name)
+                .points(makeDeepCopyOfPoints().stream()
+                        .map(point -> { point.setY(point.getY() - num); return point; })
+                        .collect(toList()))
+                .build();
+    }
+
     public int getTopBoundary() {
         return points.stream().mapToInt(Point::getY).max().orElse(0);
+    }
+
+    public int getBottomBoundary() {
+        return points.stream().mapToInt(Point::getY).min().orElse(0);
     }
 
     public int getRightBoundary() {
@@ -57,6 +69,14 @@ public class Shape {
 
     public List<Point> getPoints() {
         return makeDeepCopyOfPoints();
+    }
+
+    public Point getBottomLeftPoint() {
+        int bottom = getBottomBoundary();
+        return points.stream()
+                .filter(point -> point.getY() == bottom)
+                .min(comparing(Point::getX))
+                .orElse(Point.builder().x(0).y(0).build());
     }
 
     @Override

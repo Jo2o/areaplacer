@@ -2,19 +2,18 @@ package sk.jmikus.areaplacer.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import sk.jmikus.areaplacer.exception.ValidationException;
-import sk.jmikus.areaplacer.model.*;
+import sk.jmikus.areaplacer.model.Area;
+import sk.jmikus.areaplacer.model.Point;
 
 @Service
 public class AreaService {
 
     private final FileService fileService;
 
-    @Autowired
     public AreaService(FileService fileService) {
         this.fileService = fileService;
     }
@@ -22,7 +21,6 @@ public class AreaService {
     public Area loadArea() {
         List<String> roomFileContent = fileService.readFile("classpath:input/inRoom.txt");
         validateRoomFileContent(roomFileContent);
-
         /* Add points of the area TOP to BOTTOM and from LEFT to RIGHT. */
         Area area = new Area();
         for (int i = 1; i < roomFileContent.size(); i++) {
@@ -37,7 +35,6 @@ public class AreaService {
                 }
             }
         }
-
         return area;
     }
 

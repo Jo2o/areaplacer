@@ -73,4 +73,12 @@ class ShapeTest {
         assertThat(result).isEqualTo(1);
     }
 
+    @Test
+    void shouldGetBottomLeftPoint() {
+        // when
+        Point result = shape.getBottomLeftPoint();
+        // then
+        assertThat(result).isEqualTo(Point.builder().x(0).y(0).build());
+    }
+
 }

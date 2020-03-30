@@ -2,19 +2,22 @@ package sk.jmikus.areaplacer.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import sk.jmikus.areaplacer.exception.ValidationException;
-import sk.jmikus.areaplacer.model.*;
+import sk.jmikus.areaplacer.model.Point;
+import sk.jmikus.areaplacer.model.Shape;
 
 @Service
 public class ShapeService {
 
+    private static final Logger log = LoggerFactory.getLogger(ShapeService.class);
+
     private final FileService fileService;
 
-    @Autowired
     public ShapeService(FileService fileService) {
         this.fileService = fileService;
     }
@@ -25,24 +28,30 @@ public class ShapeService {
         try {
             List<Shape> shapes = new ArrayList<>();
             for (String line : furnitureFileContent) {
-                shapes.add(
-                        parseShape(Character.toString(line.charAt(0)),
-                                Integer.parseInt(Character.toString(line.charAt(1))),
-                                line.substring(2).toCharArray()));
+                String name = Character.toString(line.charAt(0));
+                int width = Integer.parseInt(Character.toString(line.charAt(1)));
+                char[] shapeData = line.substring(2).toCharArray();
+
+                validateFurniture(name, width, shapeData);
+                Shape parsedShape = parseShapeXy(name, width, shapeData);
+                Shape shapeMovedToOrigin = moveCloseToOrigin(name, parsedShape.getPoints());
+                shapes.add(shapeMovedToOrigin);
             }
+            log.info("Shapes loaded successfully from: {}", "file");
             return shapes;
         } catch (RuntimeException e) {
             throw new ValidationException("Furniture parse exception!", e);
         }
     }
 
-    private Shape parseShape(String name, int width, char[] characters) {
-        validateFurniture(name, width, characters);
-
+    /**
+     * Function parses shapes into Cartesian XY coordinates.
+     * It parses only '#' characters.
+     */
+    public Shape parseShapeXy(String name, int width, char[] characters) {
         int length = characters.length / width;
         int x = 0;
         int y = 0;
-
         List<Point> shapePoints = new ArrayList<>();
         for (int i = 0; i < characters.length; i++) {
             if ((i != 0) && ((i % width) == 0)) {
@@ -57,10 +66,21 @@ public class ShapeService {
             }
             x++;
         }
-
         return Shape.builder()
                 .name(name)
                 .points(shapePoints).build();
+    }
+
+    /**
+     * This strips off unnecessary '.' between [0,0] and bottom-left corner of the shape.
+     */
+    private Shape moveCloseToOrigin(String name, List<Point> points) {
+        Shape shape = Shape.builder().name(name).points(points).build();
+        int minX = points.stream().mapToInt(Point::getX).min().orElse(0);
+        int minY = points.stream().mapToInt(Point::getY).min().orElse(0);
+        shape = shape.moveDown(minY);
+        shape = shape.moveLeft(minX);
+        return shape;
     }
 
     private void validateFurnitureFileContent(List<String> furnitureFileContent) {

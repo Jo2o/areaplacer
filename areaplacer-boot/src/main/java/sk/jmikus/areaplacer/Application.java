@@ -1,6 +1,5 @@
 package sk.jmikus.areaplacer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,6 @@ public class Application implements CommandLineRunner {
 
     private final MainService mainService;
 
-    @Autowired
     public Application(MainService mainService) {
         this.mainService = mainService;
     }
