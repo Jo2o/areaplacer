@@ -1,10 +1,13 @@
 package sk.jmikus.areaplacer.service;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import sk.jmikus.areaplacer.model.Shape;
 
 @Service
 public class MainService {
@@ -23,7 +26,9 @@ public class MainService {
 
     public void invoke(String... args) {
         log.info("Program started with arguments: {}", Arrays.asList(args));
-        printService.print(placementService.calculatePlacementCombinations());
+        printService.printArea();
+        List<List<Shape>> results = placementService.calculatePlacementCombinations();
+        printService.printResults(results);
         //formatService.formatOutput();
     }
 
