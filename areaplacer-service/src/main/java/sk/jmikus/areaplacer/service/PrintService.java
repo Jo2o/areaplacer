@@ -9,6 +9,8 @@ import sk.jmikus.areaplacer.model.*;
 @Service
 public class PrintService {
 
+    private static final char EMPTY_AREA_FIELD = '*';
+
     private final AreaService areaService;
 
     public PrintService(AreaService areaService) {
@@ -40,7 +42,14 @@ public class PrintService {
         }
     }
 
-    public void printResults(List<List<Shape>> results, String areaPath) {
+    public void printResults(List<String> results) {
+        System.out.println("\n----------------------------");
+        System.out.println("Results in requested format:");
+        System.out.println("----------------------------");
+        results.forEach(System.out::println);
+    }
+
+    public void printResultLayouts(List<List<Shape>> results, String areaPath) {
         Area area = areaService.loadArea(areaPath);
         List<Point> areaPoints =  area.getPoints();
         int resultCounter = 1;
@@ -77,7 +86,7 @@ public class PrintService {
                 }
             }
         }
-        return '□';
+        return EMPTY_AREA_FIELD;
     }
 
 }

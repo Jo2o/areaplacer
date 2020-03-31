@@ -19,10 +19,6 @@ public class Area {
         return points.stream().mapToInt(Point::getY).max().orElse(0);
     }
 
-    public int getBottomBoundary() {
-        return points.stream().mapToInt(Point::getY).min().orElse(0);
-    }
-
     public List<Point> getPoints() {
         return points;
     }

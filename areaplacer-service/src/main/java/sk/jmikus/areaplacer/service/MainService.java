@@ -37,10 +37,12 @@ public class MainService {
         String outputPath = argumentService.getArgument(2, args);
 
         List<List<Shape>> results = placementService.calculatePlacementCombinations(furniturePath, roomPath);
-        printService.printArea(roomPath);
-        printService.printResults(results, roomPath);
+        List<String> output = outputService.formatOutput(results, furniturePath, roomPath);
 
-        List<String> output = outputService.formatOutput(results, outputPath);
+        printService.printArea(roomPath);
+        printService.printResultLayouts(results, roomPath);
+        printService.printResults(output);
+
         fileService.writeFile(outputPath, output);
     }
 

@@ -34,7 +34,7 @@ public class FileService {
         }
         try {
             Files.write(Paths.get(path), convertStringListToByteArray(data));
-            log.info(">>>> Output written to file: {}", path);
+            log.info("Output written to file: {}", path);
         } catch (IOException e) {
             throw new ValidationException("Input file cannot be read: " + path, e);
         }

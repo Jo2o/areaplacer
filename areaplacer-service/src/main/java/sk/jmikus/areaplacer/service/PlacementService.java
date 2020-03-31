@@ -63,7 +63,9 @@ public class PlacementService {
                             .shapes(shapes.getShapes())
                             .build(),
                     getModifiedArea(shape, area));
-            currentResult.pop();
+            if (!currentResult.isEmpty()) {
+                currentResult.pop();
+            }
         }
     }
 

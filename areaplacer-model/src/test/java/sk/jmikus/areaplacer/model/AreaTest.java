@@ -13,7 +13,8 @@ class AreaTest {
 
     @BeforeEach
     void setUp() {
-        area = Area.builder().points(Arrays.asList(
+        area = Area.builder()
+                .points(Arrays.asList(
                         Point.builder().x(0).y(0).build(),
                         Point.builder().x(0).y(1).build(),
                         Point.builder().x(1).y(1).build(),

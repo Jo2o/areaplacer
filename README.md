@@ -45,5 +45,6 @@ This is how a furniture input file is specified:
 `B1##`\
 `C2##`
 
+### Limitations
 
-
+* maximal width of the furniture is 9
