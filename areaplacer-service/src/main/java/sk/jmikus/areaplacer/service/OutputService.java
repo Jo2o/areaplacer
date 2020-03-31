@@ -8,17 +8,17 @@ import sk.jmikus.areaplacer.model.Point;
 import sk.jmikus.areaplacer.model.Shape;
 
 @Service
-public class FormatService {
+public class OutputService {
 
     private final ShapeService shapeService;
     private final FileService fileService;
 
-    public FormatService(ShapeService shapeService, FileService fileService) {
+    public OutputService(ShapeService shapeService, FileService fileService) {
         this.shapeService = shapeService;
         this.fileService = fileService;
     }
 
-    public List<String> formatOutput(List<List<Shape>> results) {
+    public List<String> formatOutput(List<List<Shape>> results, String outputPath) {
         List<String> outputLines = new ArrayList<>();
         Map<String, int[]> topLeftVectors = loadTopLeftVectors();
         for (List<Shape> result : results) {

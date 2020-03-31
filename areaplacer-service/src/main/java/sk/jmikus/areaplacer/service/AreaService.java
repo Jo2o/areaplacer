@@ -18,8 +18,8 @@ public class AreaService {
         this.fileService = fileService;
     }
 
-    public Area loadArea() {
-        List<String> roomFileContent = fileService.readFile("classpath:input/inRoom.txt");
+    public Area loadArea(String areaPath) {
+        List<String> roomFileContent = fileService.readFile(areaPath);
         validateRoomFileContent(roomFileContent);
         /* Add points of the area TOP to BOTTOM and from LEFT to RIGHT. */
         Area area = new Area();

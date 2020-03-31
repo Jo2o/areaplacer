@@ -15,8 +15,8 @@ public class PrintService {
         this.areaService = areaService;
     }
 
-    public void printArea() {
-        Area area = areaService.loadArea();
+    public void printArea(String filePath) {
+        Area area = areaService.loadArea(filePath);
         List<Point> areaPoints =  area.getPoints();
         System.out.print("AREA: \n-----");
         int currentPointIdx = 0;
@@ -40,8 +40,8 @@ public class PrintService {
         }
     }
 
-    public void printResults(List<List<Shape>> results) {
-        Area area = areaService.loadArea();
+    public void printResults(List<List<Shape>> results, String areaPath) {
+        Area area = areaService.loadArea(areaPath);
         List<Point> areaPoints =  area.getPoints();
         int resultCounter = 1;
         for (List<Shape> result : results) {

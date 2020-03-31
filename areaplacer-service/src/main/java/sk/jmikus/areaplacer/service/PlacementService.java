@@ -23,13 +23,13 @@ public class PlacementService {
         this.shapeService = shapeService;
     }
 
-    public List<List<Shape>> calculatePlacementCombinations() {
+    public List<List<Shape>> calculatePlacementCombinations(String shapesPath, String areaPath) {
         gatherResultsRecursively(
                 ListWithPointer.builder()
                         .pointer(0)
-                        .shapes(shapeService.loadShapes())
+                        .shapes(shapeService.loadShapes(shapesPath))
                         .build(),
-                areaService.loadArea());
+                areaService.loadArea(areaPath));
         return results;
     }
 

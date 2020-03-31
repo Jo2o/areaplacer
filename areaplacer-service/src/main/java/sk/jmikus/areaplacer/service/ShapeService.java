@@ -22,8 +22,8 @@ public class ShapeService {
         this.fileService = fileService;
     }
 
-    public List<Shape> loadShapes() {
-        List<String> furnitureFileContent = fileService.readFile("classpath:input/inFurniture.txt");
+    public List<Shape> loadShapes(String filePath) {
+        List<String> furnitureFileContent = fileService.readFile(filePath);
         validateFurnitureFileContent(furnitureFileContent);
         try {
             List<Shape> shapes = new ArrayList<>();
