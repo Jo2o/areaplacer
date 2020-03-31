@@ -45,6 +45,10 @@ This is how a furniture input file is specified:
 `B1##`\
 `C2##`
 
+Examples of input room and furniture files are in: 
+
+`areaplacer/areaplacer-boot/src/main/resources/input`
+
 ### Limitations
 
 * maximal width of the furniture is 9
