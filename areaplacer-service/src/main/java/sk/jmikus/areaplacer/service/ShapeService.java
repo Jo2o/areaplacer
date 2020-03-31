@@ -37,7 +37,7 @@ public class ShapeService {
                 Shape shapeMovedToOrigin = moveCloseToOrigin(name, parsedShape.getPoints());
                 shapes.add(shapeMovedToOrigin);
             }
-            log.info("Shapes loaded successfully from: {}", "file");
+            log.info("Shapes loaded successfully from: {}", filePath);
             return shapes;
         } catch (RuntimeException e) {
             throw new ValidationException("Furniture parse exception!", e);

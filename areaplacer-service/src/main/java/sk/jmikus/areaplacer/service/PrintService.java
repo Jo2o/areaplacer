@@ -27,7 +27,7 @@ public class PrintService {
             System.out.print('\n');
             for (int j = 0; j <= area.getRightBoundary(); j++) {
                 if(currentPoint.getX() == j) {
-                    System.out.print('□');
+                    System.out.print(EMPTY_AREA_FIELD);
                     currentPointIdx++;
                     if (currentPointIdx < areaPoints.size()) {
                         currentPoint = areaPoints.get(currentPointIdx);
