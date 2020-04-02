@@ -51,4 +51,6 @@ Examples of input room and furniture files are in:
 
 ### Limitations
 
-* maximal width of the furniture is 9
+* maximal width of the furniture is <b>9</b>
+* maximal number of furniture types is <b>26</b>
+* maximal number of area points is <b>1600</b> (for example: 20 width x 80 height)

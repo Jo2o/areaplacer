@@ -21,21 +21,7 @@ public class AreaService {
     public Area loadArea(String areaPath) {
         List<String> roomFileContent = fileService.readFile(areaPath);
         validateRoomFileContent(roomFileContent);
-        /* Add points of the area TOP to BOTTOM and from LEFT to RIGHT. */
-        Area area = new Area();
-        for (int i = 1; i < roomFileContent.size(); i++) {
-            String line = roomFileContent.get(i);
-            char[] lineChars = line.toCharArray();
-            for (int j = 0; j < lineChars.length; j++) {
-                if (lineChars[j] == '#') {
-                    area.addPoint(Point.builder()
-                            .x(j)
-                            .y(roomFileContent.size() - 1 - i)  // this makes Y to go from DOWN to UP
-                            .build());
-                }
-            }
-        }
-        return area;
+        return fillArea(roomFileContent);
     }
 
     private void validateRoomFileContent(List<String> roomFileContent) {
@@ -56,6 +42,23 @@ public class AreaService {
                 .findAny()
                 .ifPresent(o -> { throw new ValidationException("Area does not have correct count of columns "
                         + "- should have exactly " + columns + " columns on every line!"); });
+    }
+
+    private Area fillArea(List<String> roomFileContent) {
+        Area area = new Area();
+        for (int i = 1; i < roomFileContent.size(); i++) {
+            String line = roomFileContent.get(i);
+            char[] lineChars = line.toCharArray();
+            for (int j = 0; j < lineChars.length; j++) {
+                if (lineChars[j] == '#') {
+                    area.addPoint(Point.builder()
+                            .x(j)
+                            .y(roomFileContent.size() - 1 - i)  // this makes Y to go from DOWN to UP
+                            .build());
+                }
+            }
+        }
+        return area;
     }
 
 }

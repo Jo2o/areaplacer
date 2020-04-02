@@ -1,7 +1,6 @@
 package sk.jmikus.areaplacer.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Area {
 
@@ -30,6 +29,23 @@ public class Area {
 
     public static AreaBuilder builder() {
         return new AreaBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Area area = (Area) o;
+        return Objects.equals(getPoints(), area.getPoints());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPoints());
     }
 
     public static class AreaBuilder {

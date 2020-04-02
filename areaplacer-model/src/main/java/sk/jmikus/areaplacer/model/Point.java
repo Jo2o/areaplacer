@@ -1,5 +1,7 @@
 package sk.jmikus.areaplacer.model;
 
+import java.util.Objects;
+
 public class Point {
 
     private int x;
@@ -35,17 +37,12 @@ public class Point {
             return false;
         }
         Point point = (Point) o;
-        if (x != point.x) {
-            return false;
-        }
-        return y == point.y;
+        return (getX() == point.getX()) && (getY() == point.getY());
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = (31 * result) + y;
-        return result;
+        return Objects.hash(getX(), getY());
     }
 
     @Override

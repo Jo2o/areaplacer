@@ -23,17 +23,13 @@ class AreaTest {
 
     @Test
     void shouldGetLeftBoundary() {
-        // when
         int result = area.getRightBoundary();
-        // then
         assertThat(result).isEqualTo(1);
     }
 
     @Test
     void shouldGetTopBoundary() {
-        // when
         int result = area.getTopBoundary();
-        // then
         assertThat(result).isEqualTo(2);
     }
 

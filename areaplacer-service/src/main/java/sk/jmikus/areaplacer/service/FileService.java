@@ -28,7 +28,7 @@ public class FileService {
         }
     }
 
-    public void writeFile(String path, List<String> data) {
+    public void writeFileIfPathNotEmpty(String path, List<String> data) {
         if (StringUtils.isEmpty(path)) {
             return;
         }

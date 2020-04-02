@@ -7,10 +7,14 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import sk.jmikus.areaplacer.exception.ValidationException;
 import sk.jmikus.areaplacer.model.*;
 
 @Service
 public class PlacementService {
+
+    private static final int AREA_POINTS_LIMIT = 1600;
+    private static final int SHAPES_LIMIT = 26;
 
     private final AreaService areaService;
     private final ShapeService shapeService;
@@ -24,13 +28,20 @@ public class PlacementService {
     }
 
     public List<List<Shape>> calculatePlacementCombinations(String shapesPath, String areaPath) {
-        gatherResultsRecursively(
-                ListWithPointer.builder()
-                        .pointer(0)
-                        .shapes(shapeService.loadShapes(shapesPath))
-                        .build(),
-                areaService.loadArea(areaPath));
+        List<Shape> shapes = shapeService.loadShapes(shapesPath);
+        Area area = areaService.loadArea(areaPath);
+        validateLimits(shapes.size(), area.getPoints().size());
+        gatherResultsRecursively(ListWithPointer.builder().pointer(0).shapes(shapes).build(), area);
         return results;
+    }
+
+    private void validateLimits(int shapeTypesCount, int areaPointsCount) {
+        if (shapeTypesCount > SHAPES_LIMIT) {
+            throw new ValidationException("Program does not support more than " + SHAPES_LIMIT + " different shapes count.");
+        }
+        if (areaPointsCount > AREA_POINTS_LIMIT) {
+            throw new ValidationException("Program does not support area having more than " + AREA_POINTS_LIMIT + " points.");
+        }
     }
 
     private void gatherResultsRecursively(ListWithPointer shapes, Area area) {

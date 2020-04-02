@@ -43,7 +43,7 @@ public class MainService {
         printService.printResultLayouts(results, roomPath);
         printService.printResults(output);
 
-        fileService.writeFile(outputPath, output);
+        fileService.writeFileIfPathNotEmpty(outputPath, output);
     }
 
 }
